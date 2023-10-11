@@ -1,41 +1,30 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import './App.css';
-
-const SERVER_URL = 'http://localhost:3001';
-
+import GetAIGenImage from './components/GetAIGenImage';
 
 
 const App = () => {
-    const [imageURL, setImageURL] = useState('');
-    
+  const [prompt, setPrompt] = useState('')
 
-    useEffect(() => {        
-      
-      axios.get(SERVER_URL, {
-          responsetype: 'blob',          
-          headers: {
-            'Content-Type': 'image/jpg',
-          },
-          params: { prompt: "a pretty cat" } 
-      })
-      .then(res=> {
-        //res.data is base64 string. Use it to create data url to pass to img src
-        let srcValue = `data:image/jpg;base64,${res.data}`
+  const onPromptSubmit = (event) => { 
+    event.preventDefault();
+    const searchFieldString = event.target[0].value;
 
-        setImageURL(srcValue)
-      }).catch(err => {
-              console.log(err)
-          })   
+    setPrompt(searchFieldString);
+  };
+
+  // const prompt = 'a pretty car';
+    return(
+      <>
+        <form onSubmit={onPromptSubmit}>
+          <input name='prompting' type = 'search' placeholder='Enter Prompt' />
+          <button type='submit'>Go!</button>
+        </form>
+         
+        {prompt ? <GetAIGenImage prompt={prompt} /> : <h1>Waiting for prompt</h1>}
+      </>
         
-    }, [imageURL])
- 
-  return (
-    <div>     
-      {imageURL && <img src={`${imageURL}`} alt="" />}
-    </div>
-    
-  );
+    )
 }
 
 export default App;
