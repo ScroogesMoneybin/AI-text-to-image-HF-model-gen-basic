@@ -1,5 +1,4 @@
 const { HfInference } = require('@huggingface/inference');
-const fs = require('fs');
 require('dotenv').config();
 
 //specify huggingface access token

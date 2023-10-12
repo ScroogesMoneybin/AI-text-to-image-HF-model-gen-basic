@@ -12,7 +12,6 @@ app.use(cors({
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }));
 
-
 app.get('/', (req, res)=> textToImageGen(req, res))
 
 app.listen(PORT, () => {
